@@ -81,7 +81,10 @@ query = '美味しいラーメン屋に行きたい'
 query_vector_np = model.encode(query)
 query_vector_tensor = torch.tensor(query_vector_np, device=device)
 similarities = model.similarity(query_vector_tensor.unsqueeze(0), vectors_tensor)
-for i, similarity in enumerate(similarities[0].tolist()):
-    print(f'{similarity:.04f}: {sentences[i]}')
+# for i, similarity in enumerate(similarities[0].tolist()):
+#     print(f'{similarity:.04f}: {sentences[i]}')
+sorted_results = sorted(zip(similarities[0].tolist(), sentences), key=lambda x: x[0], reverse=True)
+for similarity, sentence in sorted_results:
+    print(f'{similarity:.04f}: {sentence}')
 
 log('処理完了')
